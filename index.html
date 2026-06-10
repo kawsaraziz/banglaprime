@@ -1,11 +1,39 @@
+
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>NAHIDFLIX</title>
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <title>Nahidflix</title>
+    <style>
+        body { margin: 0; background-color: #000; color: #fff; font-family: sans-serif; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; padding: 20px; }
+        .card { background: #1a1a1a; padding: 15px; border-radius: 10px; text-align: center; border: 1px solid #333; }
+        .card-img { width: 100%; height: 80px; background: #444; margin-bottom: 10px; border-radius: 5px; display: flex; align-items: center; justify-content: center; }
+    </style>
+</head>
+<body>
+
+    <div class="grid" id="channel-container">
+        <!-- এখানে জাভাস্ক্রিপ্ট দিয়ে চ্যানেল আসবে -->
+    </div>
+
+    <script>
+        // আপনার চ্যানেলের লিস্ট JSON ফাইল থেকে লোড হচ্ছে
+        fetch('channels.json')
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('channel-container');
+                data.forEach(channel => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `
+                        <div class="card-img">${channel.name.charAt(0)}</div>
+                        <p>${channel.name}</p>
+                    `;
+                    container.appendChild(card);
+                });
+            })
+            .catch(error => console.error('Error loading channels:', error));
+    </script>
+</body>
 </html>
