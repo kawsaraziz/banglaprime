@@ -323,7 +323,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 </div>
 
 <!-- ═══════════ ADMIN PANEL ═══════════ -->
-<div id="pg-admin">
+<div id="pg-admin" style="display:none">
 
   <!-- TOP BAR -->
   <div class="topbar">
@@ -592,10 +592,13 @@ function toggleEye(){
 }
 
 function bootAdmin(){
-  document.getElementById('pg-login').style.display='none';
+  const pl = document.getElementById('pg-login');
+  pl.style.display='none';
+  pl.style.visibility='hidden';
   const pa = document.getElementById('pg-admin');
   pa.style.display='flex';
   pa.style.flexDirection='column';
+  pa.style.visibility='visible';
   const creds = getCreds()||{user:D_USER};
   document.getElementById('uname-display').textContent='👤 '+creds.user;
   render();
