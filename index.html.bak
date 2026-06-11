@@ -809,7 +809,7 @@
 /* =============================================
    CHANNEL DATA
    ============================================= */
-const DEFAULT_CHANNELS = [
+const CHANNELS = [
   {id:1,name:"T Sports HD",cat:"Sports",logo:"https://s3.aynaott.com/storage/dbc585f70a60b9855b6e13a8ce4cb6f4",url:"https://tvsen7.aynaott.com/tsports-hd/index.m3u8?e=1781099578&u=78be6644-0a65-48ec-81a4-089ac65a2619&token=a81b0d2b5b6c662b7723c22e643fe9bb",fifa:true},
   {id:2,name:"BTV",cat:"Entertainment",logo:"https://tstatic.akash-go.com/cms-ui/images/custom-content/1778082545894.png",url:"https://owrcovcrpy.gpcdn.net/bpk-tv/1709/output/index.m3u8",fifa:true},
   {id:3,name:"BTV CTG",cat:"Bangla",logo:"https://s3.aynaott.com/storage/00da8a07fb26b2fb79359ee535e4c7bc",url:"https://tvsen6.aynaott.com/btvctg/index.m3u8?e=1781099577&u=78be6644-0a65-48ec-81a4-089ac65a2619&token=d3a71f91859893ea4adf26425bf71814",fifa:true},
@@ -1107,32 +1107,6 @@ const DEFAULT_CHANNELS = [
   {id:295,name:"YRF Music HD",cat:"Unknown",logo:"",url:"https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg01412-xiaomiasia-yrfmusic-xiaomi/playlist.m3u8",fifa:false}
 ];
 
-// ── Admin থেকে সেভ করা চ্যানেল লোড করো, না থাকলে DEFAULT ব্যবহার করো ──
-let CHANNELS = (function() {
-  try {
-    var saved = localStorage.getItem('bf_ch');
-    if (saved) {
-      var parsed = JSON.parse(saved);
-      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
-    }
-  } catch(e) {}
-  return JSON.parse(JSON.stringify(DEFAULT_CHANNELS));
-})();
-
-// Admin যদি কিছু পরিবর্তন করে সেটা live reload করো (same-origin storage event)
-window.addEventListener('storage', function(e) {
-  if (e.key === 'bf_ch' && e.newValue) {
-    try {
-      var updated = JSON.parse(e.newValue);
-      if (Array.isArray(updated)) {
-        CHANNELS.length = 0;
-        updated.forEach(function(c) { CHANNELS.push(c); });
-        renderCurrentView();
-      }
-    } catch(err) {}
-  }
-});
-
 const CATEGORIES = ["All", "Bangla", "Documentary", "English", "Entertainment", "Hindi", "Hindi Movies", "Infotainment", "Kids", "Latest", "Movies", "Music", "News", "Religious", "Sports", "Unknown", "Weather"];
 
 /* =============================================
@@ -1322,13 +1296,6 @@ function renderGrid(list, containerId, emptyMsg) {
     return;
   }
   list.forEach(ch => renderChannelCard(ch, grid));
-}
-
-function renderCurrentView() {
-  if (currentView === "home") renderHome();
-  else if (currentView === "favorites") renderFavs();
-  else if (currentView === "recent") renderRecent();
-  else if (currentView === "all") renderAll();
 }
 
 function renderHome() {
