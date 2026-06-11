@@ -258,7 +258,7 @@ body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,san
 
 
 <!-- TOP BAR -->
-<div class="topbar">
+<div class="topbar" id="mainTopbar" style="display:none">
   <div class="topbar-logo">Bongo<span>Flex</span></div>
   <div class="topbar-badge">Admin Panel</div>
   <div class="topbar-right" id="topbarRight">
@@ -267,7 +267,7 @@ body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,san
   </div>
 </div>
 
-<div class="layout">
+<div class="layout" id="mainLayout" style="display:none">
 
 <!-- ── LEFT: ADD / EDIT FORM ── -->
 <div class="left-panel">
@@ -850,6 +850,8 @@ function doLockCountdown() {
 
 function showAdminPanel() {
   document.getElementById('loginScreen').classList.add('hidden');
+  document.getElementById('mainTopbar').style.display = 'flex';
+  document.getElementById('mainLayout').style.display = 'grid';
   const creds = getStoredCreds() || { user: DEFAULT_USER };
   // Add logout + change pw buttons to topbar
   const tr = document.getElementById('topbarRight');
